@@ -1,13 +1,14 @@
 from guts import app
+from guts.models import *
 from flask import session, redirect, url_for, render_template, flash
 
 @app.route('/')
 def index():
-    return "Hello Julian"
+    return render_template("list_users.html", users=User.objects, title="Users")
 
-@app.route('/users/')
+@app.route('/players/')
 def list_users():
-    return render_template("list_users.html")
+    return render_template("list_users.html", users=Player.objects, title="Players")
 
 @app.route('/users/add', methods=["POST"])
 def add_user():

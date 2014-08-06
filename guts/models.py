@@ -1,14 +1,24 @@
-'''
+from mongoengine import Document, StringField, ReferenceField
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True)
-    email = db.Column(db.String(120), unique=True)
+class User(Document):
+    username = StringField(max_length=50)
+    email = StringField(required=True)
 
-    def __init__(self, username, email):
-        self.username = username
-        self.email = email
-        
-    def __repr__(self):
-        return "<User %r>" % self.username
-'''
+    meta = {'allow_inheritance': True}
+
+class Coach(User):
+    pass
+
+class Player(User):
+    level = StringField(max_length=10)
+
+#Super class for all drills
+class Drill(Document):
+    name = StringField(required=True)
+    #TODO should deleting a player delete all of their drills?
+    player = ReferenceField(Player)
+    meta = {'allow_inheritance': True}
+ 
+#Class specifically to do with elbow drill
+class ElbowDrill(Drill):
+    misses = StringField(required=True, max_length=10)
