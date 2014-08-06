@@ -1,5 +1,6 @@
 from guts import app
 from guts.models import *
+from guts.forms import *
 from flask import session, redirect, url_for, render_template, flash
 
 @app.route('/')
@@ -10,10 +11,9 @@ def index():
 def list_users():
     return render_template("list_users.html", users=Player.objects, title="Players")
 
-@app.route('/users/add', methods=["POST"])
-def add_user():
-    #user = User(request.form['username'], request.form['email'])
-    #db.session.add(user)
-    #db.session.commit()
-    #flash("New User Added!")
-    return redirect(url_for('list_users'))
+@app.route('/coach/admin', methods=["POST", "GET"])
+def add_player():
+    form = AddPlayerForm()
+    if form.validate_on_submit():
+        return "SUCESS!!"
+    return render_template("admin.html", add_player_form=form)

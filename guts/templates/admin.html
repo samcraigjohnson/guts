@@ -1,0 +1,14 @@
+{% extends "foundation_base.html" %}
+{% import "foundation_wtf.html" as wtf %}
+{% block body_content %}
+<div class="row">
+<div class="columns medium-4">
+<form method="post">
+  {{ add_player_form.hidden_tag() }}
+  <h3>Username:</h3> {{ add_player_form.username(size=30) }}
+  <h3>Email</h3> {{ add_player_form.email(size=150) }}
+  <input type="submit" value="Go">
+</form>
+</div>
+</div>
+{% endblock %}
