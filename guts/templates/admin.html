@@ -1,14 +1,38 @@
-{% extends "foundation_base.html" %}
-{% import "foundation_wtf.html" as wtf %}
-{% block body_content %}
+{% extends "layout.html" %}
+{% block body %}
 <div class="row">
-<div class="columns medium-4">
-<form method="post">
-  {{ add_player_form.hidden_tag() }}
-  <h3>Username:</h3> {{ add_player_form.username(size=30) }}
-  <h3>Email</h3> {{ add_player_form.email(size=150) }}
-  <input type="submit" value="Go">
-</form>
+  <div class="columns medium-4">
+    <h1>Add Player</h1>
+    <form method="post" id="add-player-form">
+      {{ add_player_form.hidden_tag() }}
+      <div class="row">
+	<div class="medium-12 columns">
+	  <label>Username
+	    {{ add_player_form.username() }}
+	  </label>
+	</div>
+      </div>
+      <div class="row">
+	<div class="medium-12 columns">
+	  <label>Email
+	    {{ add_player_form.email() }}
+	  </label>
+	</div>
+      </div>
+      <input class="button" type="submit" value="Go">
+    </form>
+  </div>
+  <div class="columns medium-8">
+    <h1> Players </h1>
+    <ul>
+      {% for player in players %}
+      <li>username: <strong>{{ player.username }}</strong>, email: <strong>{{ player.email }}</strong></li> 
+      {% endfor %}
+    </ul>
+  </div>
 </div>
-</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="{{ url_for('static', filename='js/admin.js') }}"></script>
 {% endblock %}

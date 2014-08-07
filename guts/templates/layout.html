@@ -1,9 +1,21 @@
 <!doctype html>
-<title>Guts</title>
-<div class=page>
-  <h1>B-ball</h1>
-  {% for message in get_flashed_messages() %}
-     <div class=flash>{{ message }}</div>
-  {% endfor %}
+<head>
+  <title>Guts</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/normalize.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/foundation.min.css') }}">
+
+  <script type="text/javascript" src="{{ url_for('static', filename='js/modernizr.js') }}"></script>
+</head>
+<body>
   {% block body %}{% endblock %}
-</div>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.11.1.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/foundation.min.js') }}"></script>
+  <script type="text/javascript">
+    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    $(document).foundation();
+  </script>
+
+  {% block scripts %}{% endblock %}
+</body>
+
+

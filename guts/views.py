@@ -12,8 +12,12 @@ def list_users():
     return render_template("list_users.html", users=Player.objects, title="Players")
 
 @app.route('/coach/admin', methods=["POST", "GET"])
-def add_player():
+def admin():
     form = AddPlayerForm()
     if form.validate_on_submit():
-        return "SUCESS!!"
-    return render_template("admin.html", add_player_form=form)
+        player = Player()
+        player.username = form.username.data
+        player.email = form.email.data
+        player.save()
+        redirect('admin')
+    return render_template("admin.html", add_player_form=form, players=Player.objects)
