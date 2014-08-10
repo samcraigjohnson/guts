@@ -1,9 +1,11 @@
-from guts import app
+from guts import app, user_datastore
 from guts.models import *
 from guts.forms import *
 from flask import session, redirect, url_for, render_template, flash
+from flask.ext.security import login_required
 
 @app.route('/')
+@login_required
 def index():
     return render_template("list_users.html", users=User.objects, title="Users")
 

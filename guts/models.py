@@ -1,4 +1,5 @@
-from mongoengine import Document, DateTimeField, StringField, ReferenceField, EmailField, ListField
+from guts import db
+from flask.ext.security import UserMixin, RoleMixin
 import datetime
 
 '''
@@ -8,33 +9,43 @@ All fields are optional enless required is set to True
 '''
 
 drill_list = []
+
 LEVELS = ["Yellow", "Orange", "Purple"] 
 
-class User(Document):
-    username = StringField(max_length=50, required=True, unique=True)
-    email = EmailField(required=True)
-    first_name = StringField(max_length=50)
-    last_name = StringField(max_length=50)
-    meta = {'allow_inheritance': True}
+class Role(db.Document, RoleMixin):
+    name = db.StringField(max_length=80, unique=True)
+    description = db.StringField(max_length=255)
 
-class Session(Document):
-    time = DateTimeField(default=datetime.datetime.now)
+class User(db.Document, UserMixin):
+    username = db.StringField(max_length=50)
+    password = db.StringField(max_length=255)
+    active = db.BooleanField(default=True)
+    email = db.StringField(max_length=255)
+    confirmed_at = db.DateTimeField()
+
+    first_name = db.StringField(max_length=50)
+    last_name = db.StringField(max_length=50)
+    roles = db.ListField(db.ReferenceField(Role), default=[])
+
+    meta = {'allow_inheritance': True}
+    
+class Session(db.Document):
+    time = db.DateTimeField(default=datetime.datetime.now)
 
 class Coach(User):
     pass
 
 class Player(User):
-    level = StringField(max_length=10, choices=LEVELS)
-    sessions = ListField(ReferenceField(Session))
+    level = db.StringField(max_length=10, choices=LEVELS)
+    sessions = db.ListField(db.ReferenceField(Session))
 
 #Super class for all drills
-class Drill(Document):
-    name = StringField(required=True)
+class Drill(db.Document):
+    name = db.StringField(required=True)
     #TODO should deleting a player delete all of their drills?
-    player = ReferenceField(Player)
+    player = db.ReferenceField(Player)
     meta = {'allow_inheritance': True}
  
 #Class specifically to do with elbow drill
 class ElbowDrill(Drill):
-    misses = StringField(required=True, max_length=10)
-
+    misses = db.StringField(required=True, max_length=10)
