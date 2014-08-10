@@ -5,11 +5,11 @@ from flask import session, redirect, url_for, render_template, flash
 from flask.ext.security import login_required
 
 @app.route('/')
-@login_required
 def index():
-    return render_template("list_users.html", users=User.objects, title="Users")
+    return render_template("index.html")
 
 @app.route('/players/')
+@login_required
 def list_users():
     return render_template("list_users.html", users=Player.objects, title="Players")
 

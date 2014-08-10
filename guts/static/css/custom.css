@@ -1,0 +1,15 @@
+html, body{
+    background-color: #606060;
+}
+
+.login-box{
+    background-color: white;
+    border: 3px solid #505050;
+    margin-top: 150px;
+}
+
+.login-box input{
+    width: 200px;
+    text-align: center;
+    margin: 0 auto;
+}

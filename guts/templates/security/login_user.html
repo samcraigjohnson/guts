@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% from "security/_macros.html" import render_field_with_errors, render_field %}
+
+{% block body %}
+{% include "security/_messages.html" %}
+<div class="row site-background">
+  <div class="medium-12">
+    <div class="row">
+      <div class="medium-4 medium-centered columns login-box">
+	<h3 class="text-center">LOGIN</h3>
+	<form action="{{ url_for_security('login') }}" method="POST" name="login_user_form">
+	  {{ login_user_form.hidden_tag() }}
+	  {{ render_field_with_errors(login_user_form.email) }}
+	  {{ render_field_with_errors(login_user_form.password) }}
+	  {{ render_field(login_user_form.next) }}
+	  <input id="submit" class="button" type="submit" name="submit" value="LOGIN">
+	</form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

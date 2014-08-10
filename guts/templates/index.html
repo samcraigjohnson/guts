@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="row">
+<div class="medium-12 columns">
+  <h1 class="text-center">KAIZEN</h1>
+  {% if current_user.is_authenticated() %}
+  <h2 class="text-center"> Hello {{ current_user.email }} </h2>
+  <a class="button" href="{{ url_for('security.logout') }}">LOGOUT</a>
+  {% else %}
+  <div class="row">
+    <div class="medium-6 columns text-center">
+      <a class="button" href="{{ url_for('security.login') }}">LOGIN</a>
+    </div>
+    <div class="medium-6 columns text-center">
+      <a class="button" href="{{ url_for('security.register') }}">REGISTER</a>
+    </div>
+  </div>
+  {% endif %}
+</div>
+</div>
+{% endblock %}
